@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Moon</title>
+    <style>
+      @font-face {
+        font-family: Medieval;
+        src: url("font/OldeEnglish.ttf");
+        }
+      canvas {
+          padding-left: 0;
+          padding-right: 0;
+          margin-left: auto;
+          margin-right: auto;
+          display: block;
+      }
+    </style>
+    <script src="Sprite.js"></script>
+    <script src="Scene.js"></script>
+    <script src="AssetsManager.js"></script>
+    <script src="GameManager.js"></script>
+    <script src="Map.js"></script>
+    <script src="Animation.js"></script>
+</head>
+
+<body style="background-color: black">
+    <canvas></canvas>
+    <script>
+        var assetsMng = new AssetsManager();
+        assetsMng.loadImage("hero", "assets/hero.png");
+        assetsMng.loadImage("moon", "assets/moon.png");
+        assetsMng.loadImage("mana", "assets/mana.png");
+        assetsMng.loadImage("heart", "assets/heart.png");
+        assetsMng.loadImage("people", "assets/people.png");
+        assetsMng.loadImage("flame", "assets/flame.png");
+        assetsMng.loadImage("object", "assets/object.png");
+        assetsMng.loadImage("cenario", "assets/cenario.png");
+        assetsMng.loadImage("monster", "assets/monster.png");
+        assetsMng.loadImage("bigboss", "assets/bigboss.png");
+        assetsMng.loadImage("bigboss2", "assets/bigboss2.png");
+        assetsMng.loadImage("expressoes", "assets/expressoes.png");
+        assetsMng.loadImage("explosion", "assets/explosion.png");
+        assetsMng.loadAudio("explosion", "assets/explosion.mp3");
+        assetsMng.loadImage("sword", "assets/sword.png");
+        assetsMng.loadImage("crystal", "assets/crystal.png");
+        assetsMng.loadImage("gargoyle", "assets/gargoyle.png");
+        assetsMng.loadAudio("sword", "assets/sword.ogg");
+        assetsMng.loadAudio("sword2", "assets/sword2.ogg");
+        assetsMng.loadAudio("explosion", "assets/explosion.mp3");
+        assetsMng.loadAudio("shot", "assets/fire.ogg");
+        assetsMng.loadAudio("damage", "assets/damage.ogg");
+        assetsMng.loadAudio("quest", "assets/quest.ogg");
+        assetsMng.loadAudio("heal", "assets/heal.ogg");
+        assetsMng.loadAudio("darkness", "assets/darkness.ogg");
+        assetsMng.loadAudio("earth", "assets/earth.ogg");
+        assetsMng.loadAudio("earth2", "assets/earth2.ogg");
+        assetsMng.loadAudio("castelo", "assets/tema1.mp3")
+
+        var canvas = document.querySelector("canvas");
+        canvas.width = 384;
+        canvas.height = 440;
+        var ctx = canvas.getContext("2d");
+        var teclas = {
+            esquerda: 0,
+            cima: 0,
+            direita: 0,
+            baixo: 0,
+            fireball: 0,
+            espada: 0,
+        }
+
+        /*var mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
+        [
+        [1,1,1,1,1,1,1,1,1,1,1,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,0,1,0,0,0,0,0,0,0,1],
+        [1,0,1,1,0,1,1,1,0,0,0,1],
+        [1,0,1,1,0,0,0,1,1,1,0,1],
+        [1,0,0,0,0,0,0,0,0,0,0,1],
+        [1,0,1,1,0,0,1,1,0,1,1,1],
+        [1,0,0,0,0,1,1,0,0,0,1,1],
+        [1,0,0,0,1,1,1,0,0,1,1,1],
+        [1,1,1,1,1,1,1,1,1,1,1,1],
+        ]
+        });
+        mapa.cells[6][9].tipo = 1;
+        mapa.cells[2][9].tipo = 1;
+        mapa.cells[4][9].tipo = 1;
+        mapa.cells[4][2].tipo = 1;*/
+        
+        var pc = new Sprite({ x: 192, y: 220, w: 12, h: 12, imgX:0, imgY:0, vidas: 7, imagem: "hero", comportar: porTeclasDirecionais(teclas), props: { tipo: "pc" }});
+
+        var gerenciador = new GameManager(pc);
+
+        var cena1 = new Scene({ ctx: ctx, w: canvas.width, h: canvas.height-120, assets: assetsMng, gamer: gerenciador,});
+        cena1.adicionar(pc);
+        
+        function porTeclasDirecionais(teclas) {
+            return function () {
+                if(this.charStop <= 0){
+            	if (teclas.esquerda) { 
+                	this.vx = -70; 
+                	this.direcao = 1;
+                }
+                if (teclas.direita) { 
+                	this.vx = +70;
+                	this.direcao = 2;
+                	}
+                if (teclas.esquerda === teclas.direita) { this.vx = 0; }
+                if (teclas.cima) { 
+                	this.vy = -70;
+                	this.direcao = 3;
+                 }
+                if (teclas.baixo) { 
+                	this.vy = +70;
+                	this.direcao = 0;
+                	 }
+                if (teclas.cima === teclas.baixo) { this.vy = 0; }
+                if (teclas.espada && this.swCD <= 0 && this.globalCD <= 0) {
+                    var tiro = new Sprite({
+                        x: this.x, y: this.y,
+                        imagem: "object", direcao: this.direcao,
+                        vm: 0, w: 12, h: 12, imgX: 3, imgY: 1, imune: 0,
+                        props: { tipo: "tiro", modelo: "espada" }, desenhar: desenhaEspada, mover: moverEspada, pc: this
+                    });
+                    this.charStop = 0.2;
+                    this.scene.adicionar(tiro);
+                    this.swCD = 0.6;
+                    this.globalCD = 0.2;
+                    assetsMng.play("sword");
+                }
+
+                if (teclas.fireball && this.spCD <= 0 && this.globalCD <= 0) {
+                    if(this.mana > 0){
+                    var tiro = new Sprite({
+                        x: this.x, y: this.y,
+                        imagem: "flame", direcao: this.direcao,
+                        vm: 140, w: 12, h: 12, imgX: 0, imgY: 1, imune: 0,
+                        props: { tipo: "tiro", modelo: "fireball" }, desenhar: desenhaTiro, mover: moverTiro,
+                    });
+                    this.scene.adicionar(tiro);
+                    assetsMng.play("shot");
+                    this.mana--;
+                    this.spCD = 2;
+                    }
+
+                    this.globalCD = 0.2;
+                    this.charStop = 0.3;
+                }
+            
+            }
+            }
+        }
+
+        function persegue(alvo) {
+            return function () {
+                this.vx = this.vm * Math.sign(alvo.x - this.x);
+                this.vy = this.vm * Math.sign(alvo.y - this.y);
+                
+                if(this.y < alvo.y + alvo.h/2) {this.direcao = 0}
+                else{if(this.y > alvo.y - alvo.h/2){this.direcao = 3}
+                }     
+            }
+        }
+
+        //direcao => 0: baixo 1: esquerda, 2: direita, 3: cima
+        function moverTiro() {
+            
+        	this.frame += 8*dt;
+        	this.vx, this.vy = 0
+        	switch(this.direcao){
+        		case 0:
+        			this.vy = this.vm;
+        			break;
+        		case 1:
+        			this.vx = -1*this.vm;
+        			break;
+        		case 2:
+        			this.vx = this.vm;
+        			break;
+        		case 3:
+        			this.vy = -1*this.vm;
+        			break;
+        	}
+     		this.x = this.x + this.vx*dt;
+ 		    this.y = this.y + this.vy*dt;
+        }
+
+        function desenhaTiro(){
+        	ctx.save();
+        	ctx.fillStyle = "midnightblue";
+            ctx.fillRect(this.x,this.y,this.w,this.h/2);
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(this.x,this.y,this.w,this.h/2);
+	    	ctx.translate(this.x, this.y);  
+		    var F = Math.floor(this.frame);
+		    ctx.drawImage(
+	        this.scene.assets.img(this.imagem),
+	        144*this.imgX + (F%3)*48,
+	        192*this.imgY + this.direcao*48 + 1,
+	        48,
+	        48,
+	        -this.w-4,
+	        -this.h/2-15,
+	        30,
+	        30,
+		    );
+
+		    ctx.restore();
+        }
+
+        //direcao => 0: baixo 1: esquerda, 2: direita, 3: cima
+        function desenhaEspada(){
+            ctx.save();
+            /*ctx.fillStyle = "midnightblue";
+            ctx.fillRect(this.x,this.y,this.w,this.h);
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(this.x,this.y,this.w,this.h);*/
+            var posX = this.x;
+            var posY = this.y;
+            switch (this.direcao) {
+                case 0:
+                    posX = posX + 8;
+                    posY = posY - 9;
+                    break;
+                case 1:
+                    posX = posX + 10;
+                    break;
+                case 3:
+                    posY = posY + 5;
+                    posX = posX + 2;
+                    break;
+            }
+            ctx.translate(posX, posY);  
+            var F = Math.floor(this.frame);
+            ctx.drawImage(
+            this.scene.assets.img(this.imagem),
+            144*this.imgX,
+            192*this.imgY + this.direcao*48 - 1,
+            48,
+            48,
+            -this.w,
+            -this.h/2,
+            25,
+            25,
+            );
+
+            ctx.restore();
+        }
+
+        //direcao => 0: baixo 1: esquerda, 2: direita, 3: cima
+        function moverEspada(){
+            switch (this.direcao) {
+                case 0:
+                    this.y = this.pc.y + 10;
+                    this.x = this.pc.x - 5;
+                    break;
+                case 1:
+                    this.x = this.pc.x - this.w - 10;
+                    this.y = this.pc.y - this.h;
+                    break;
+                case 2:
+                    this.x = this.pc.x + this.w;
+                    this.y = this.pc.y - this.h;
+                    break;
+                case 3:
+                    this.y = this.pc.y - this.h*2.5;
+                    this.x = this.pc.x - 5;
+                    break;
+            }
+            this.frame = this. frame + 20*dt;
+            if(Math.floor(this.frame) > 4.2){
+                this.scene.toRemove.push(this);
+            }
+        }
+
+        function atirarFireball() {
+            //console.log("foi")
+            if(this.globalCD <= 0){
+                this.scene.adicionar(criarFireball(0,"tiroE", this.direcao, this.x, this.y))
+                this.globalCD = 1.5;
+            }
+        }
+
+        function criarFireball (numero, atira, direct, pX, pY) {
+            var tiro = new Sprite({
+                        x: pX, y: pY,
+                        imagem: "flame", direcao: direct,
+                        vm: 140, w: 12, h: 12, imgX: 1, imgY: 1, imune: 0,
+                        props: { tipo: atira, modelo: "fireball", objeto: numero }, desenhar: desenhaTiro, mover: moverTiro,
+                    });
+            assetsMng.play("shot");
+            return tiro;
+        }
+
+        function moverObjeto() {
+            this.spCD = this.spCD - dt;
+            this.swCD = this.swCD - dt;
+            this.globalCD = this.globalCD - dt;
+        }
+
+        function moverRocha() {
+            this.frame += 8*dt;
+            this.vx, this.vy = 0;
+            this.vm = this.vm + 0.8;
+            switch(this.direcao){
+                case 0:
+                    this.vy = this.vm;
+                    break;
+                case 1:
+                    this.vx = -1*this.vm;
+                    break;
+                case 2:
+                    this.vx = this.vm;
+                    break;
+                case 3:
+                    this.vy = -1*this.vm;
+                    break;
+            }
+            this.x = this.x + this.vx*dt;
+            this.y = this.y + this.vy*dt;
+        }
+
+        function atirarRochas () {
+            if(this.globalCD <= 0){
+                this.charStop = 0.2;
+                var tiro = new Sprite({
+                        x: this.x, y: this.y,
+                        imagem: "object", direcao: this.direcao,
+                        vm: 15, w: 12, h: 12, imgX: 0, imgY: 0, imune: 0,
+                        props: { tipo: "tiroE", modelo: "rocha" }, desenhar: desenhaTiro, mover: moverRocha,
+                    });
+                this.scene.adicionar(tiro);
+                assetsMng.play("earth");
+                this.globalCD = 4;
+            }
+        }
+
+        function desenharChefe (ctx) {
+
+            ctx.save();
+            ctx.fillStyle = "midnightblue";
+            ctx.fillRect(this.x-this.w/2,this.y,this.w,this.h/2);
+            ctx.strokeStyle = "black";
+            ctx.strokeRect(this.x-this.w/2,this.y,this.w,this.h/2);
+
+
+            ctx.translate(this.x, this.y);
+            if(this.imune > 0 && this.atingido <= 0){
+              ctx.globalAlpha = 0.5*Math.cos(60*this.imune);
+            }
+
+
+            
+            var F = Math.floor(this.frame);
+            if(this.charStop > 0) {F = 0;}
+            if(this.vx == 0 && this.vy == 0) {F = 0;}
+            ctx.drawImage(
+                this.scene.assets.img(this.imagem),
+                (F%3)*96,
+                96*this.imgY,
+                96,
+                96,
+                -this.w-2,
+                -this.h-12,
+                48,
+                48,
+            );
+
+            ctx.restore();
+            ctx.globalAlpha = 1.0;
+            
+        };
+
+        function atirarRochas2 () {
+            
+            if(this.spCD <= 0 && this.globalCD <= 0){
+                var tiro = new Sprite({
+                        x: this.x, y: this.y,
+                        imagem: "object", direcao: 0,
+                        vm: 15, w: 12, h: 12, imgX: 0, imgY: 0, imune: 0,
+                        props: { tipo: "tiroE", modelo: "rocha" }, desenhar: desenhaTiro, mover: moverRocha,
+                    });
+                this.scene.adicionar(tiro);
+                assetsMng.play("earth");
+                this.spCD = 0.3;
+                this.rockCount++;
+                if(this.rockCount == 7){
+                    this.globalCD = this.baseCD;
+                    this.rockCount = 0;
+                }
+            }
+        }
+
+        function moverChefe(dt) {
+            if(this.imune > 0) {
+                this.imune = this.imune - 1*dt;
+            }
+            
+            this.mc = (this.x / this.scene.map.SIZE);
+            if(this.mc >= 10.5 || this.mc <= 1.5){
+                this.vx = this.vx * -1
+            }
+            this.x = this.x + this.vx*this.vm*dt;
+            this.spCD = this.spCD - dt;
+            this.globalCD = this.globalCD - dt;
+            this.frame += 8*dt;
+
+            if(this.vidas == 10) {
+                this.imagem = "bigboss2";
+                this.vm = 75;
+                this.baseCD = 1.6;
+            }
+        }
+
+        function necromancia () {
+            if (this.globalCD <= 0) {
+                this.globalCD = 3.5;
+                this.scene.assets.play("darkness");
+                cena1.adicionar(new Sprite({ x: this.x, y: this.y, w: 12, h: 12, vm: 40, imgX:1, imgY:1, 
+                imagem: "monster", comportar: persegue(pc), props: { tipo: "npc" }}))
+            }
+        }
+
+        addEventListener("keydown", function (e) {
+            switch (e.keyCode) {
+                case 74:
+                    teclas.fireball = 1;
+                    break;
+                case 75:
+                    teclas.espada = 1;
+                    break;
+                case 65:
+                    teclas.esquerda = 1;
+                    break;
+                case 87:
+                    teclas.cima = 1;
+                    break;
+                case 68:
+                    teclas.direita = 1;
+                    break;
+                case 83:
+                    teclas.baixo = 1;
+                    break;
+            }
+        });
+        addEventListener("keyup", function (e) {
+            switch (e.keyCode) {
+                case 74:
+                    teclas.fireball = 0;
+                    break;
+                case 75:
+                    teclas.espada = 0;
+                    break;
+                case 65:
+                    teclas.esquerda = 0;
+                    break;
+                case 87:
+                    teclas.cima = 0;
+                    break;
+                case 68:
+                    teclas.direita = 0;
+                    break;
+                case 83:
+                    teclas.baixo = 0;
+                    break;
+            }
+        });
+
+        function passo(t) {
+            dt = (t - anterior) / 1000;
+            if(assetsMng.progresso()===100){
+                cena1.passo(dt);
+                
+            }
+            anterior = t;
+            ctx.fillStyle = "black";
+            ctx.font = "10px Arial";
+            ctx.fillText(1 / dt, 10, 20);
+            requestAnimationFrame(passo);
+        }
+
+        var dt, anterior = 0;
+        requestAnimationFrame(passo);
+
+
+    </script>
+</body>
+
+</html>
