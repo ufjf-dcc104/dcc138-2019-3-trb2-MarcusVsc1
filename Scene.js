@@ -21,6 +21,7 @@ function Scene(params) {
         estagio: null,
         gamer: null,
         monsterCounter: 0,
+        dialogo: ""
     }
     Object.assign(this, exemplo, params);
 }
@@ -411,16 +412,24 @@ Scene.prototype.desenharHUD = function() {
             );
         posCoracao = posCoracao + 16;
     }
+
+    //desenha a caixa de dialogo
     var imgX = 2;
     var imgY = 7;
-
-
-    var tX = 1;
-
     this.desenharCaixaDialogo(imgX,imgY);
     var imgX = 1;
     this.desenharCaixaDialogo2(imgX,imgY);
-
+    ctx.font = "10px Arial";
+    ctx.fillStyle = "black";
+    if(this.dialogo.includes("_")){
+        var dialogos = this.dialogo.split("_");
+        for(var i = 0; i < dialogos.length; i++){
+            ctx.fillText(dialogos[i],16,this.h+20 + i*12);
+        }
+    } else{
+        ctx.fillText(this.dialogo,16,this.h+20);
+    }
+    
     
 
 

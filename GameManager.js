@@ -79,6 +79,7 @@ GameManager.prototype.criarEstagios = function(){
         gerenciador.tema.loop = true;
         gerenciador.tema.src = "assets/tema1.mp3";
         gerenciador.tema.play();
+        cena1.dialogo = "";
         var idx = cena1.estagio.eventos.indexOf(this);
         cena1.estagio.eventos.splice(idx);
     }
@@ -341,6 +342,7 @@ GameManager.prototype.criarEstagios = function(){
         gerenciador.tema.play();
         var idx = cena1.estagio.eventos.indexOf(this);
         console.log(cena1.estagio.eventos.splice(idx, 1));
+        cena1.dialogo = "\"Você não irá passar!!\"";
         
     }
 
@@ -357,6 +359,7 @@ GameManager.prototype.criarEstagios = function(){
             var idx = cena1.estagio.eventos.indexOf(this);
             cena1.assets.play("quest");
             cena1.estagio.eventos.splice(idx, 1);
+            cena1.dialogo = "";
         }
     }
     eventoLista.push(evento1);
