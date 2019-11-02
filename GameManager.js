@@ -543,6 +543,29 @@ GameManager.prototype.criarEstagios = function(){
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
+    //estagio 13
+
+    mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
+        [
+        [6,6,6,6,6,6,6,6,6,6,6,6],
+        [6,8,7,7,7,7,7,7,7,7,0,0],
+        [6,0,0,9,0,9,9,9,9,9,0,6],
+        [6,0,8,0,7,0,9,9,9,9,0,6],
+        [6,0,9,7,0,7,0,9,9,9,0,6],
+        [6,0,9,9,9,0,7,0,0,9,0,6],
+        [6,0,9,9,9,9,0,7,0,9,0,6],
+        [6,0,9,9,9,9,0,0,8,9,0,6],
+        [6,0,9,9,9,9,9,9,0,0,0,6],
+        [6,6,6,6,6,6,6,6,6,6,6,6],
+        ]
+        });
+    spriteLista = [];
+    eventoLista = [];
+
+
+
+    this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
+
 }
 
 //direcao => 0: baixo 1: esquerda, 2: direita, 3: cima
