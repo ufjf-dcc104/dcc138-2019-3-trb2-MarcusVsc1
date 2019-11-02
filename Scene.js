@@ -411,6 +411,196 @@ Scene.prototype.desenharHUD = function() {
             );
         posCoracao = posCoracao + 16;
     }
+    var imgX = 2;
+    var imgY = 7;
+
+
+    var tX = 1;
+
+    this.desenharCaixaDialogo(imgX,imgY);
+    var imgX = 1;
+    this.desenharCaixaDialogo2(imgX,imgY);
+
+    
+
+
+}
+
+Scene.prototype.desenharCaixaDialogo = function (imgX,imgY) {
+    var pX = 0
+    var pY = 0
+    for (var i = 0; i < 23; i ++) {
+        for (var j = 0; j < 3; j ++){
+            ctx.drawImage(
+            this.assets.img("hud"),
+            288 + 96*imgX + 32*pX+5,
+            96*imgY + 32*pY,
+            32,
+            32,
+            i*16,
+            this.h + j*16,
+            16,
+            16,
+            );
+        }
+        ctx.drawImage(
+        this.assets.img("hud"),
+        288 + 96*imgX + 32*(pX+1),
+        96*imgY + 32*(pY+2),
+        32,
+        32,
+        i*16,
+        this.h + 48,
+        16,
+        16,
+        );
+            
+        }
+        pY = 1;
+        pX = 2;
+        for (var i = 0; i < 3; i ++) {
+            ctx.drawImage(
+            this.assets.img("hud"),
+            288 + 96*imgX + 32*(pX),
+            96*imgY + 32*(pY),
+            32,
+            32,
+            this.w-16,
+            this.h + i*16,
+            16,
+            16,
+            );
+        }
+        
+        pY = 2;
+        ctx.drawImage(
+            this.assets.img("hud"),
+            288 + 96*imgX + 32*(pX),
+            96*imgY + 32*(pY),
+            32,
+            32,
+            this.w -16,
+            this.h+48,
+            16,
+            16,
+            );
+
+}
+
+Scene.prototype.desenharCaixaDialogo2 = function (imgX,imgY) {
+    var pY = 0;
+    var pX = 0;
+
+    ctx.drawImage(
+        this.assets.img("hud"),
+        96*imgX + 32*pX,
+        96*imgY + 32*pY,
+        32,
+        32,
+        0,
+        this.h,
+        16,
+        16,
+    );
+
+    pY = 2
+
+    ctx.drawImage(
+        this.assets.img("hud"),
+        96*imgX + 32*pX,
+        96*imgY + 32*pY,
+        32,
+        32,
+        0,
+        this.h+48,
+        16,
+        16,
+    );
+
+    pX = 2
+    pY = 0;
+
+    ctx.drawImage(
+        this.assets.img("hud"),
+        96*imgX + 32*pX,
+        96*imgY + 32*pY,
+        32,
+        32,
+        this.w-16,
+        this.h,
+        16,
+        16,
+    );
+
+
+    pX = 1
+    for (var i = 1; i < 23; i ++) {
+        
+        ctx.drawImage(
+        this.assets.img("hud"),
+        96*imgX + 32*pX + 5,
+        96*imgY + 32*pY,
+        32,
+        32,
+        i*16,
+        this.h,
+        16,
+        16,
+        );
+    
+        ctx.drawImage(
+        this.assets.img("hud"),
+        96*imgX + 32*(pX) - 5,
+        96*imgY + 32*(pY+2),
+        32,
+        32,
+        i*16,
+        this.h + 48,
+        16,
+        16,
+        );
+            
+        }
+        pY = 1;
+        for (var i = 1; i < 3; i ++) {
+            pX = 2;
+            ctx.drawImage(
+            this.assets.img("hud"),
+            96*imgX + 32*(pX),
+            96*imgY + 32*(pY),
+            32,
+            32,
+            this.w-16,
+            this.h + i*16,
+            16,
+            16,
+            );
+            pX = 0;
+            ctx.drawImage(
+            this.assets.img("hud"),
+            96*imgX + 32*(pX),
+            96*imgY + 32*(pY),
+            32,
+            32,
+            0,
+            this.h + i*16,
+            16,
+            16,
+            );
+        }
+        pX = 2;
+        pY = 2;
+        ctx.drawImage(
+            this.assets.img("hud"),
+            96*imgX + 32*(pX),
+            96*imgY + 32*(pY),
+            32,
+            32,
+            this.w -16,
+            this.h+48,
+            16,
+            16,
+            );
 }
 
 Scene.prototype.passo = function(dt){
