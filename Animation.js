@@ -1,10 +1,11 @@
-function Explosion(params ={}) {
+function Animation(params ={}) {
     exemplo = {
         x: 0,
         y: 0,
         frame: 0,
         w: 40,
         h: 40,
+        imagem: null,
         props: {
             tipo: "boom"
         },
@@ -12,21 +13,20 @@ function Explosion(params ={}) {
     Object.assign(this, exemplo, params);
 }
 
-Explosion.prototype.mover = function(dt){
+Animation.prototype.mover = function(dt){
     this.frame += 26*dt;
     if(Math.floor(this.frame) > 16){
-        //this.frame = 0;
-        this.morto = true;
+        this.scene.toRemove.push(this);
     }
 }
 
-Explosion.prototype.desenhar = function(){
+Animation.prototype.desenhar = function(){
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.rotate(this.a + Math.PI/2);
     var F = Math.floor(this.frame);
     ctx.drawImage(
-        this.scene.assets.img("explosion"),
+        this.scene.assets.img(this.imagem),
         (F%4)*64,
         Math.floor(F/4)*64,
         64,
@@ -39,10 +39,10 @@ Explosion.prototype.desenhar = function(){
     ctx.restore();
 }
 
-Explosion.prototype.comportar = function(){
+Animation.prototype.comportar = function(){
 
 }
 
-Explosion.prototype.colidiuCom = function(){
+Animation.prototype.colidiuCom = function(){
     return false;
 }

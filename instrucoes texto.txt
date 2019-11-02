@@ -1,0 +1,2 @@
+altura: 216 - 36 por bloco
+largura: 364 -28 por bloco
