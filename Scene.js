@@ -20,7 +20,7 @@ function Scene(params) {
         stageIndex: 0,
         estagio: null,
         gamer: null,
-        monsterCounter: 0,
+        spriteCounter: 0,
         dialogo: ""
     }
     Object.assign(this, exemplo, params);
@@ -292,7 +292,7 @@ Scene.prototype.checaColisao = function(){
             this.spritesTE = [];
             this.spritesEV = [];
             this.spritesPoder = [];
-            this.monsterCounter = 0;
+            this.spriteCounter = 0;
 
         }
     }
@@ -361,10 +361,10 @@ Scene.prototype.desenharMapa = function () {
 }
 
 Scene.prototype.incluirInimigos = function() {
-    while (this.monsterCounter < this.estagio.sprites.length) {
-        var inimigo = this.estagio.sprites[this.monsterCounter];
+    while (this.spriteCounter < this.estagio.sprites.length) {
+        var inimigo = this.estagio.sprites[this.spriteCounter];
         this.adicionar(inimigo);
-        this.monsterCounter++;
+        this.spriteCounter++;
     }
 }
 

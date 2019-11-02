@@ -15,7 +15,7 @@ function GameManager(pc) {
 // cima para baixo: spriteLista.push(this.criarTeleporte(x.2,0.2,nX.5,8.9,m));
 // baixo para cima: spriteLista.push(this.criarTeleporte(x,9.8,nX.5,1,m));
 // direita para esquerda: spriteLista.push(this.criarTeleporte(11.8,y.2,1.5,nY.5,m));
-// esquerda para direita: spriteLista.push(this.criarTeleporte(0.2,y,11,y.5,m));
+// esquerda para direita: spriteLista.push(this.criarTeleporte(0.2,y.2,11,y.5,m));
 
 /*modelo de mapa
 mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
@@ -520,7 +520,7 @@ GameManager.prototype.criarEstagios = function(){
 
     spriteLista.push(this.criarTeleporte(5.2,9.8,5.5,1,10)); 
     spriteLista.push(this.criarTeleporte(6.2,9.8,6.5,1,10)); 
-    spriteLista.push(this.criarTeleporte(0.2,1,11,1.5,12));
+    spriteLista.push(this.criarTeleporte(0.2,1.2,11,1.5,12));
     spriteLista.push(this.criarTeleporte(11.8,1.2,1.5,1.5,13));
 
     spriteLista.push(this.criarInimigo(7,7,4))
@@ -552,16 +552,23 @@ GameManager.prototype.criarEstagios = function(){
         [6,0,0,9,0,9,9,9,9,9,0,6],
         [6,0,8,0,7,0,9,9,9,9,0,6],
         [6,0,9,7,0,7,0,9,9,9,0,6],
-        [6,0,9,9,9,0,7,0,0,9,0,6],
-        [6,0,9,9,9,9,0,7,0,9,0,6],
+        [6,0,0,9,7,0,7,0,0,9,0,6],
+        [6,0,8,9,9,7,0,7,0,9,0,6],
         [6,0,9,9,9,9,0,0,8,9,0,6],
-        [6,0,9,9,9,9,9,9,0,0,0,6],
+        [6,0,9,0,9,9,7,7,0,0,0,6],
         [6,6,6,6,6,6,6,6,6,6,6,6],
         ]
         });
     spriteLista = [];
     eventoLista = [];
 
+    
+    spriteLista.push(this.criarInimigo(7,1,6));
+    spriteLista.push(this.criarTeleporte(11.8,1.2,1.5,1.5,11));
+    spriteLista.push(this.criarInimigo(0,4,1));
+
+    spriteLista.push(this.criarDisparador(2,5,2)); 
+    spriteLista.push(this.criarDisparador(8,8,1)); 
 
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
