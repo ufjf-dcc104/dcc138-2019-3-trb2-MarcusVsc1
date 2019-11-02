@@ -432,6 +432,7 @@ GameManager.prototype.criarEstagios = function(){
     event = function () {
         gerenciador.estagios[10].mapa.cells[9][1].tipo = 9;
         gerenciador.estagios[10].mapa.cells[9][2].tipo = 9;
+        cena1.assets.play("quest");
     }
 
     spriteLista.push(this.criarEventador(5,7,event));
