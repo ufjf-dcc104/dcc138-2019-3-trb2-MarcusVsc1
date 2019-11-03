@@ -627,6 +627,7 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista.push(this.criarInimigo(8,10,3));
     spriteLista.push(this.criarInimigo(8,9,4));
     spriteLista.push(this.criarTeleporte(0.2,1.2,11,1.5,11));
+    spriteLista.push(this.criarTeleporte(11.8,1.2,1.5,1.5,15))
 
     spriteLista.push(this.criarDisparador(9,1,0)); 
 
@@ -685,23 +686,23 @@ GameManager.prototype.criarEstagios = function(){
 
     mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
         [
-        [9,9,9,9,9,9,9,9,9,9,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,9,9,9,9,9,9,9,9,9,0,9],
+        [0,0,9,0,9,9,0,9,9,9,0,9],
+        [6,0,9,7,9,9,0,0,9,0,0,9],
+        [6,0,9,9,9,9,7,0,9,0,8,9],
+        [6,0,9,0,0,0,9,0,9,0,9,9],
+        [6,0,9,0,8,7,9,0,9,7,9,9],
+        [6,0,9,0,9,9,9,0,0,0,9,9],
+        [6,0,9,7,9,9,9,7,0,0,9,9],
+        [6,0,0,0,0,0,0,0,0,0,9,9],
         [6,6,6,6,6,6,6,6,6,6,6,6],
         ]
         });
     spriteLista = [];
     eventoLista = [];
 
-    spriteLista.push(this.criarTeleporte(5.2,9.8,1.5,1,6));
-    spriteLista.push(this.criarTeleporte(6.2,9.8,1.5,1,6));
+    spriteLista.push(this.criarTeleporte(0.2,1.2,11,1.5,13));
+    //spriteLista.push(this.criarTeleporte(6.2,9.8,1.5,1,6));
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
