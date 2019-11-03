@@ -65,6 +65,58 @@ Map.prototype.desenhar = function (ctx) {
                     y = 0;
                     x = 1;
                     break;
+                //tapete
+                case 5.1:
+                    x = 2;
+                    y = 3;
+                    positionY = 1;
+                    break;
+                case 5.2:
+                    x = 2;
+                    y = 3;
+                    positionY = 2;
+                    break;
+                case 5.3:
+                    x = 2;
+                    y = 3;
+                    positionY = 3;
+                    break;
+                case 5.4:
+                    x = 2;
+                    y = 3;
+                    positionY = 1;
+                    positionX = 1;
+                    break;
+                case 5.5:
+                    x = 2;
+                    y = 3;
+                    positionY = 2;
+                    positionX = 1;
+                    break;
+                case 5.6:
+                    x = 2;
+                    y = 3;
+                    positionY = 3;
+                    positionX = 1;
+                    break;
+                case 5.7:
+                    x = 2;
+                    y = 3;
+                    positionY = 1;
+                    positionX = 2;
+                    break;
+                case 5.8:
+                    x = 2;
+                    y = 3;
+                    positionY = 2;
+                    positionX = 2;
+                    break;
+                case 5.9:
+                    x = 2;
+                    y = 3;
+                    positionY = 3;
+                    positionX = 2;
+                    break;
                 case 6:
                 //parede
                     y = 2;
