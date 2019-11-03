@@ -725,8 +725,8 @@ GameManager.prototype.criarEstagios = function(){
     mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
         [
         [9,9,9,9,9,1,3,9,9,9,9,9],
-        [9,0,0,0,9,0,0,0,0,9,9,9],
-        [9,7,7,7,9,7,7,0,0,9,9,9],
+        [9,0,0,0,9,0,0,0,9,9,9,9],
+        [9,7,7,7,9,7,0,0,0,9,9,9],
         [9,0,9,9,9,9,0,0,0,0,9,9],
         [9,0,9,0,9,0,8,7,7,0,0,9],
         [9,0,9,7,0,8,9,0,9,7,0,9],
@@ -749,6 +749,25 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista.push(this.criarObjeto(0, 5, 4, 1));
     spriteLista.push(this.criarObjeto(0, 6, 3, 1));
     spriteLista.push(this.criarDisparador(3,1,0)); 
+    spriteLista.push(this.criarDisparador(7,1,0)); 
+    spriteLista.push(this.criarInimigo(8,8,2));
+    spriteLista.push(this.criarInimigo(8,9,3));
+    spriteLista.push(this.criarInimigo(0,3,8));
+    spriteLista.push(this.criarInimigo(3,5,7));
+
+
+    event = function () {
+        gerenciador.estagios[16].mapa.cells[1][2].tipo = 0;
+    }
+
+    spriteLista.push(this.criarEventador(7,5,event));
+
+    event = function () {
+        gerenciador.estagios[16].mapa.cells[4][1].tipo = 0;
+        gerenciador.estagios[16].mapa.cells[4][2].tipo = 7;
+    }
+
+    spriteLista.push(this.criarEventador(3,4,event));
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
