@@ -314,6 +314,13 @@ Scene.prototype.checaColisao = function(){
     }
     //colisao com teleporte
     for (var i = 0; i < this.spritesTP.length; i++) {
+        if(this.bruxa!=null && this.bruxa.colidiuCom(this.spritesTP[i])){
+            this.bruxa = null;
+            this.gamer.estagios[this.stageIndex].mapa.cells[3][4].tipo = 0
+            this.gamer.estagios[this.stageIndex].mapa.cells[3][3].tipo = 0
+            this.assets.play("door");
+            this.dialogo = "Agora é a hora da verdade!_A batalha final contra a bruxa finalmente começará!"
+        }
         if(this.pc.colidiuCom(this.spritesTP[i])) {
             this.stageIndex = this.spritesTP[i].props.idx;
             this.pc.x = this.spritesTP[i].tX;
