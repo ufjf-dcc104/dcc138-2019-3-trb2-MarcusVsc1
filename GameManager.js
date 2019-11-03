@@ -197,7 +197,7 @@ GameManager.prototype.criarEstagios = function(){
             var idx = cena1.estagio.eventos.indexOf(this);
             if(gerenciador.globalVar[0] == 2){
                 cena1.assets.play("quest");
-                cena1.dialogo = "Uma nova passagem foi liberada";
+                cena1.dialogo = "Uma nova passagem foi liberada.";
             }
             cena1.estagio.eventos.splice(idx);
         }
@@ -628,7 +628,6 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista.push(this.criarInimigo(8,9,4));
     spriteLista.push(this.criarTeleporte(0.2,1.2,11,1.5,11));
     spriteLista.push(this.criarTeleporte(11.8,1.2,1.5,1.5,15))
-
     spriteLista.push(this.criarDisparador(9,1,0)); 
 
     event = function () {
@@ -693,7 +692,7 @@ GameManager.prototype.criarEstagios = function(){
         [6,0,9,0,0,0,9,0,9,0,9,9],
         [6,0,9,0,8,7,9,0,9,7,9,9],
         [6,0,9,0,9,9,9,0,0,0,9,9],
-        [6,0,9,7,9,9,9,7,0,0,9,9],
+        [6,0,9,7,9,9,9,7,7,0,9,9],
         [6,0,0,0,0,0,0,0,0,0,9,9],
         [6,6,6,6,6,6,6,6,6,6,6,6],
         ]
@@ -702,7 +701,22 @@ GameManager.prototype.criarEstagios = function(){
     eventoLista = [];
 
     spriteLista.push(this.criarTeleporte(0.2,1.2,11,1.5,13));
-    //spriteLista.push(this.criarTeleporte(6.2,9.8,1.5,1,6));
+    spriteLista.push(this.criarTeleporte(10.2,0.2,10.5,8.9,16));
+    spriteLista.push(this.criarObjeto(0, 3, 4, 1));
+    spriteLista.push(this.criarObjeto(0, 3, 5, 1));
+    spriteLista.push(this.criarObjeto(0, 3, 6, 1));
+    spriteLista.push(this.criarObjeto(0, 4, 4, 0));
+    spriteLista.push(this.criarObjeto(0, 5, 4, 0));
+    spriteLista.push(this.criarInimigo(3,6,8));
+    spriteLista.push(this.criarInimigo(0,6,3));
+    spriteLista.push(this.criarInimigo(8,9,2));
+    spriteLista.push(this.criarDisparador(6,1,1)); 
+
+    event = function () {
+        gerenciador.estagios[15].mapa.cells[9][5].tipo = 0;
+    }
+
+    spriteLista.push(this.criarEventador(3,1,event));
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
@@ -754,6 +768,7 @@ GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
             inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:1, vx:0, vy:0, globalCD: 1.5,
                 vidas: 3, imagem: "monster", comportar: necromancia, props: { tipo: "npc" }});
             break;
+        // touro para baixo
         case 8:
             inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:0, vx:0, vy:0,
                 direcao: 0, imagem: "monster", comportar: atirarRochas, props: { tipo: "npc" }});
