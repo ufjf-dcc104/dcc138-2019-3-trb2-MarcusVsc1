@@ -649,6 +649,12 @@ GameManager.prototype.criarEstagios = function(){
 
     spriteLista.push(this.criarTeleporte(5.2,9.8,5.2,1,11));
     spriteLista.push(this.criarTeleporte(6.2,9.8,6.2,1,11));
+    spriteLista.push(this.criarInimigo(7,3,3));
+    spriteLista.push(this.criarInimigo(7,8,3));
+    spriteLista.push(this.criarInimigo(8,1,1));
+    spriteLista.push(this.criarInimigo(8,10,1));
+    spriteLista.push(this.criarInimigo(3,2,4));
+    spriteLista.push(this.criarInimigo(0,9,4));
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
