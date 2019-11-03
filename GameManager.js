@@ -744,6 +744,8 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista.push(this.criarPoder(0,1,1));
     spriteLista.push(this.criarPoder(1,2,1));
     spriteLista.push(this.criarTeleporte(10,9.8,10.5,1,15));
+     spriteLista.push(this.criarTeleporte(5.2,0.2,5.5,8.9,17));
+    spriteLista.push(this.criarTeleporte(6.2,0.2,6.5,8.9,17));
     spriteLista.push(this.criarObjeto(0, 3, 6, 1));
     spriteLista.push(this.criarObjeto(0, 4, 5, 1));
     spriteLista.push(this.criarObjeto(0, 5, 4, 1));
@@ -753,7 +755,7 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista.push(this.criarInimigo(8,8,2));
     spriteLista.push(this.criarInimigo(8,9,3));
     spriteLista.push(this.criarInimigo(0,3,8));
-    spriteLista.push(this.criarInimigo(3,5,7));
+    spriteLista.push(this.criarInimigo(3,10,6));
 
 
     event = function () {
@@ -768,6 +770,38 @@ GameManager.prototype.criarEstagios = function(){
     }
 
     spriteLista.push(this.criarEventador(3,4,event));
+
+    evento1 = function() {
+        gerenciador.tema.play();
+    }
+
+    eventoLista.push(evento1);
+
+    this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
+
+    //estagio 18
+
+    mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
+        [
+        [6,6,6,6,6,1,3,6,6,6,6,6],
+        [12,12,12,12,12,1,3,12,12,12,12,12],
+        [12,12,12,12,12,1,3,12,12,12,12,12],
+        [11,11,11,11,11,4,4,11,11,11,11,11],
+        [7,7,7,7,7,4,4,7,7,7,7,7],
+        [9,9,9,9,4,4,4,4,9,9,9,9],
+        [9,9,9,9,4,4,4,4,9,9,9,9],
+        [9,9,9,9,7,1,3,8,9,9,9,9],
+        [9,9,9,9,9,1,3,9,9,9,9,9],
+        [9,9,9,9,9,4,4,9,9,9,9,9],
+        ]
+        });
+    spriteLista = [];
+    eventoLista = [];
+
+    spriteLista.push(this.criarTeleporte(5.2,9.8,5.5,1,16));
+    spriteLista.push(this.criarTeleporte(6.2,9.8,6.5,1,16));
+    spriteLista.push(this.criarTeleporte(5.2,0.2,1.5,8.9,8));
+    spriteLista.push(this.criarTeleporte(6.2,0.2,1.5,8.9,8));
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
