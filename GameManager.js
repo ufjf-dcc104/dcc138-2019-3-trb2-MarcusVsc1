@@ -522,6 +522,8 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista.push(this.criarTeleporte(6.2,9.8,6.5,1,10)); 
     spriteLista.push(this.criarTeleporte(0.2,1.2,11,1.5,12));
     spriteLista.push(this.criarTeleporte(11.8,1.2,1.5,1.5,13));
+    spriteLista.push(this.criarTeleporte(5.2,0.2,5.5,8.9,14));
+    spriteLista.push(this.criarTeleporte(6.2,0.2,6.5,8.9,14));
 
     spriteLista.push(this.criarInimigo(7,7,4))
     spriteLista.push(this.criarInimigo(7,4,4))
@@ -581,6 +583,12 @@ GameManager.prototype.criarEstagios = function(){
 
     spriteLista.push(this.criarEventador(3,8,event));
 
+    event = function () {
+        gerenciador.estagios[13].mapa.cells[6][2].tipo = 0;
+    }
+
+    spriteLista.push(this.criarEventador(8,5,event));
+
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
@@ -590,12 +598,12 @@ GameManager.prototype.criarEstagios = function(){
         [
         [6,6,6,6,6,6,6,6,6,6,6,6],
         [0,0,0,0,0,0,0,8,0,0,0,6],
-        [6,8,7,7,7,7,0,9,0,0,0,6],
+        [6,8,7,7,7,7,7,9,0,0,0,6],
         [6,9,9,9,0,0,0,9,1,2,3,6],
         [6,9,9,0,0,8,7,9,1,2,3,6],
         [6,9,0,0,8,9,9,9,1,2,3,6],
-        [6,9,0,8,9,9,9,9,1,2,3,6],
-        [6,0,0,9,9,9,9,0,1,2,3,6],
+        [6,0,0,8,9,9,9,9,1,2,3,6],
+        [6,0,8,9,9,9,9,0,1,2,3,6],
         [6,0,0,0,0,0,0,0,8,0,8,6],
         [6,6,6,6,6,6,6,6,6,6,6,6],
         ]
@@ -626,12 +634,12 @@ GameManager.prototype.criarEstagios = function(){
         [
         [6,6,6,6,6,6,6,6,6,6,6,6],
         [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,2,6,6,0,6,6,0,6,6,2,6],
+        [6,2,6,0,0,0,0,0,0,6,2,6],
+        [6,0,0,3,3,6,6,1,3,0,0,6],
+        [6,0,0,1,3,6,6,1,3,0,0,6],
+        [6,2,6,0,0,0,0,0,0,6,2,6],
+        [6,2,6,6,2,6,6,2,6,6,2,6],
         [6,0,0,0,0,0,0,0,0,0,0,6],
         [6,6,6,6,6,0,0,6,6,6,6,6],
         ]
@@ -639,8 +647,8 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista = [];
     eventoLista = [];
 
-    spriteLista.push(this.criarTeleporte(5.2,9.8,1.5,1,6));
-    spriteLista.push(this.criarTeleporte(6.2,9.8,1.5,1,6));
+    spriteLista.push(this.criarTeleporte(5.2,9.8,5.2,1,11));
+    spriteLista.push(this.criarTeleporte(6.2,9.8,6.2,1,11));
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
@@ -677,7 +685,7 @@ GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
             break;
         //touro a direita
         case 5:
-            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:0, vx:0, vy:0,
+            inimigo = new Sprite({ x: posX*32+26, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:0, vx:0, vy:0,
                 direcao: 2, imagem: "monster", comportar: atirarRochas, props: { tipo: "npc" }});
             break;
         //chefe 1
