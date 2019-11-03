@@ -603,6 +603,10 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista = [];
     eventoLista = [];
 
+    spriteLista.push(this.criarInimigo(7,2,5));
+    spriteLista.push(this.criarInimigo(8,8,2));
+    spriteLista.push(this.criarInimigo(8,10,3));
+    spriteLista.push(this.criarInimigo(8,9,4));
     spriteLista.push(this.criarTeleporte(0.2,1.2,11,1.5,11));
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
@@ -653,6 +657,10 @@ GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
         case 7:
             inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:1, vx:0, vy:0, globalCD: 1.5,
                 vidas: 3, imagem: "monster", comportar: necromancia, props: { tipo: "npc" }});
+            break;
+        case 8:
+            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:0, vx:0, vy:0,
+                direcao: 0, imagem: "monster", comportar: atirarRochas, props: { tipo: "npc" }});
             break;
     }
     return inimigo;
