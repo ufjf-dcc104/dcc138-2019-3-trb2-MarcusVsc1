@@ -21,7 +21,8 @@ function Scene(params) {
         estagio: null,
         gamer: null,
         spriteCounter: 0,
-        dialogo: ""
+        dialogo: "",
+        bruxa: null
     }
     Object.assign(this, exemplo, params);
 }
@@ -33,6 +34,9 @@ Scene.prototype.constructor = Scene;
 Scene.prototype.adicionar = function(sprite){
     if(sprite.props.tipo == "pc"){
         this.pc = sprite;
+    }
+    if(sprite.props.tipo == "bruxa"){
+        this.bruxa = sprite;
     }
     if(sprite.props.tipo == "tiro"){
         this.spritesT.push(sprite);
@@ -94,6 +98,9 @@ Scene.prototype.desenhar = function(){
     for(var i = 0; i<this.spritesPoder.length; i++){
         this.spritesPoder[i].desenhar(this.ctx);
     } 
+
+    if(this. bruxa != null && this.bruxa.desenhar){this.bruxa.desenhar(this.ctx);}  
+
     for(var i = 0; i<this.spritesTE.length; i++){
         this.spritesTE[i].desenhar(this.ctx);
     } 
@@ -109,7 +116,6 @@ Scene.prototype.desenhar = function(){
         if(this.pc.desenhar){this.pc.desenhar(this.ctx);}  
     }
 
-    
     for(var i = 0; i<this.spritesD.length; i++){
         if(this.spritesD[i].y > this.pc.y)this.spritesD[i].desenhar(this.ctx);
     } 
@@ -147,6 +153,10 @@ Scene.prototype.mover = function(dt){
     if(this.pc != null){
         this.pc.mover(dt);
     }
+
+    if(this.bruxa != null){
+        this.bruxa.mover(dt);
+    }
 };
 
 //adiciona o comportamento dos sprites
@@ -179,6 +189,10 @@ Scene.prototype.comportar = function(){
 
     if(this.pc != null && this.pc.comportar){
         this.pc.comportar();
+    }
+
+    if(this.bruxa != null && this.bruxa.comportar){
+        this.bruxa.comportar();
     }
 };
 
@@ -232,6 +246,13 @@ Scene.prototype.checaColisao = function(){
     //remoção de tiro ao sair da tela. por questões de desempenho foi necessário (quando o tiro ia pra baixo, 
     //o jogo ia pra 30 frames/seg)
     for(var i = 0; i < this.spritesTE.length; i++){
+        if(this.spritesTE[i].colidiuCom(this.bruxa)){
+            this.adicionar(new Animation({x: this.spritesTE[i].x, y:this.spritesTE[i].y, imagem: "explosion"}));
+            this.assets.play("explosion");
+            this.toRemove.push(this.spritesTE[i]);
+            this.bruxa.vidas--;
+            this.bruxa.imune = 0.3;
+        }
         if(this.spritesTE[i]!=null){
             if(this.spritesTE[i].y > this.h - 32 - this.spritesTE[i].h || this.spritesTE[i].y < 0 + 32
                 || this.spritesTE[i].x > this.w - 32 || this.spritesTE[i].x < 0 + 32){
@@ -325,6 +346,7 @@ Scene.prototype.checaColisao = function(){
 
 Scene.prototype.removeSprites = function () {
     for (var i = 0; i < this.toRemove.length; i++) {
+
         if(this.toRemove[i].props.tipo == "npc"){
             var idx = this.estagio.sprites.indexOf(this.toRemove[i]);
             if(idx>=0){

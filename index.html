@@ -34,6 +34,7 @@
         assetsMng.loadImage("hud", "assets/hud.png");
         assetsMng.loadImage("moon", "assets/moon.png");
         assetsMng.loadImage("mana", "assets/mana.png");
+        assetsMng.loadImage("bruxa", "assets/bruxa.png");
         assetsMng.loadImage("heart", "assets/heart.png");
         assetsMng.loadImage("people", "assets/people.png");
         assetsMng.loadImage("flame", "assets/flame.png");
@@ -430,6 +431,40 @@
                 this.scene.assets.play("darkness");
                 cena1.adicionar(new Sprite({ x: this.x, y: this.y, w: 12, h: 12, vm: 29 + Math.random()*11, imgX:1, imgY:1, 
                 imagem: "monster", comportar: persegue(pc), props: { tipo: "npc" }}))
+            }
+        }
+
+        function moverBruxa(){
+            if(this.imune > 0) {
+                this.imune = this.imune - 1*dt;
+            }
+            
+            this.mc = (this.x / this.scene.map.SIZE);
+            if(this.mc >= 10.4 || this.mc <= 1.6){
+                this.vx = this.vx * -1
+            }
+            this.x = this.x + this.vx*this.vm*dt;
+            this.spCD = this.spCD - dt;
+            this.globalCD = this.globalCD - dt;
+            this.frame += 8*dt;
+
+            if(this.vidas == 20)  {
+                this.scene.dialogo = "\nQual o problema dessa garota?!\""
+            }
+            if(this.vidas == 5){
+                this.scene.dialogo = "\nEla conseguiu quebrar minha barreira!..._"+
+                "Preciso me recompor!\""
+                this.mover = pc.mover;
+                this.comportar = persegue(cena1.spritesTP[0]);
+            }
+        }
+        //comportamento da fase 1 da bruxa, que cria fantasmas
+        function bruxaria() {
+            if (this.globalCD <= 0) {
+                this.scene.assets.play("darkness");
+                cena1.adicionar(new Sprite({ x: this.x, y: this.y, w: 12, h: 12, vm: 29 + Math.random()*11, imgX:2, imgY:1, 
+                imagem: "monster", atravessa: 1, comportar: persegue(pc), props: { tipo: "npc" }}))
+                this.globalCD = 1.5 + Math.random() * 2;
             }
         }
 

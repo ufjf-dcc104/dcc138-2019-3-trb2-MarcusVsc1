@@ -739,12 +739,10 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista = [];
     eventoLista = [];
 
-   // spriteLista.push(this.criarTeleporte(5.2,0.2,1.5,8.9,8));
-   // spriteLista.push(this.criarTeleporte(6.2,0.2,1.5,8.9,8));
     spriteLista.push(this.criarPoder(0,1,1));
     spriteLista.push(this.criarPoder(1,2,1));
     spriteLista.push(this.criarTeleporte(10,9.8,10.5,1,15));
-     spriteLista.push(this.criarTeleporte(5.2,0.2,5.5,8.9,17));
+    spriteLista.push(this.criarTeleporte(5.2,0.2,5.5,8.9,17));
     spriteLista.push(this.criarTeleporte(6.2,0.2,6.5,8.9,17));
     spriteLista.push(this.criarObjeto(0, 3, 6, 1));
     spriteLista.push(this.criarObjeto(0, 4, 5, 1));
@@ -814,7 +812,7 @@ GameManager.prototype.criarEstagios = function(){
         [6,0,0,0,0,0,0,0,0,0,0,6],
         [6,12,12,12,12,12,12,12,12,12,12,6],
         [6,11,11,11,11,11,11,11,11,11,11,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,6,0,0,0,6,6,0,0,0,6,6],
         [6,0,0,6,0,0,0,0,6,0,0,6],
         [6,6,0,0,0,0,0,0,0,0,6,6],
         [6,6,6,0,0,0,0,0,0,6,6,6],
@@ -825,6 +823,13 @@ GameManager.prototype.criarEstagios = function(){
     eventoLista = [];
 
     //spriteLista.push(this.criarTeleporte(5.2,9.8,1.5,1,6));
+
+
+    spriteLista.push(this.criarDisparador(2,6,3)); 
+    spriteLista.push(this.criarDisparador(9,6,3)); 
+    spriteLista.push(this.criarDisparador(4,7,3)); 
+    spriteLista.push(this.criarDisparador(7,7,3)); 
+    spriteLista.push(this.criarInimigo(9,5.5,2));
 
     evento1 = function() {
         gerenciador.tema.src = "assets/blackflare.ogg";
@@ -892,6 +897,11 @@ GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
         case 8:
             inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:0, vx:0, vy:0,
                 direcao: 0, imagem: "monster", comportar: atirarRochas, props: { tipo: "npc" }});
+            break;
+        // bruxa fase 1
+        case 9:
+            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 60, imgX:1, imgY:1, vx: 1, vy:0, globalCD: 2, baseCD: 2,
+                direcao: 0, imagem: "bruxa", vidas: 30, mover: moverBruxa, comportar: bruxaria, props: { tipo: "bruxa" }});
             break;
     }
     return inimigo;

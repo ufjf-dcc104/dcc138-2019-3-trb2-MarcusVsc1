@@ -30,7 +30,8 @@ function Sprite(params = {}) {
         vidas: 1,
         mana: 5,
         charStop: 0,
-        atingido: 0
+        atingido: 0,
+        atravessa: 0,
     }
     Object.assign(this, exemplo, params);
 }
@@ -56,12 +57,13 @@ Sprite.prototype.desenhar = function (ctx) {
     var picY = this.imgY;
 
     if(this.atingido > 0 && this.imune > 0){
-        console.log("entrou!");
         d = 0;
         img = "expressoes";
         picX = 0;
         picY = 1;
     }
+
+    if(this.atravessa == 1) {ctx.globalAlpha = 0.5;}
     
     var F = Math.floor(this.frame);
     if(this.vx == 0 && this.vy == 0 && this.props.tipo == "pc") {F = 1;}
@@ -146,19 +148,19 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
     dnx = dx;
     dy = this.vy * dt;
     dny = dy;
-    if (dx > 0 && this.scene.map.cells[this.mc + 1][this.ml].tipo >=6) {
+    if (dx > 0 && this.scene.map.cells[this.mc + 1][this.ml].tipo >=6 && this.atravessa != 1) {
         dnx = this.scene.map.SIZE * (this.mc + 1) - (this.x + this.w / 2);
         dx = Math.min(dnx, dx);
     }
-    if (dx < 0 && this.scene.map.cells[this.mc - 1][this.ml].tipo >=6) {
+    if (dx < 0 && this.scene.map.cells[this.mc - 1][this.ml].tipo >=6 && this.atravessa != 1) {
         dnx = this.scene.map.SIZE * (this.mc - 1 + 1) - (this.x - this.w / 2);
         dx = Math.max(dnx, dx);
     }
-    if (dy > 0 && this.scene.map.cells[this.mc][this.ml + 1].tipo >=6) {
+    if (dy > 0 && this.scene.map.cells[this.mc][this.ml + 1].tipo >=6 && this.atravessa != 1) {
         dny = this.scene.map.SIZE * (this.ml + 1) - (this.y + this.h / 2);
         dy = Math.min(dny, dy);
     }
-    if (dy < 0 && this.scene.map.cells[this.mc][this.ml - 1].tipo >=6) {
+    if (dy < 0 && this.scene.map.cells[this.mc][this.ml - 1].tipo >=6 && this.atravessa != 1) {
         dny = this.scene.map.SIZE * (this.ml - 1 + 1) - (this.y - this.h / 2);
         dy = Math.max(dny, dy);
     }
@@ -169,8 +171,8 @@ Sprite.prototype.aplicaRestricoes = function (dt) {
     var MAXX = this.scene.map.SIZE * this.scene.map.COLUMNS - this.w / 2;
     var MAXY = this.scene.map.SIZE * this.scene.map.LINES - this.h / 2;
 
-    if (this.x > MAXX) this.x = MAXX;
-    if (this.y > MAXY) {
+    if (this.x > MAXX && this.atravessa != 1) this.x = MAXX;
+    if (this.y > MAXY && this.atravessa != 1) {
         this.y = MAXY;
         this.vy = 0;
     }
