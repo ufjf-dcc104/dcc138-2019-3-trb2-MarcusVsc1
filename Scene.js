@@ -246,7 +246,7 @@ Scene.prototype.checaColisao = function(){
     //remoção de tiro ao sair da tela. por questões de desempenho foi necessário (quando o tiro ia pra baixo, 
     //o jogo ia pra 30 frames/seg)
     for(var i = 0; i < this.spritesTE.length; i++){
-        if(this.spritesTE[i].colidiuCom(this.bruxa)){
+        if(this.bruxa != null && this.spritesTE[i].colidiuCom(this.bruxa)){
             this.adicionar(new Animation({x: this.spritesTE[i].x, y:this.spritesTE[i].y, imagem: "explosion"}));
             this.assets.play("explosion");
             this.toRemove.push(this.spritesTE[i]);
