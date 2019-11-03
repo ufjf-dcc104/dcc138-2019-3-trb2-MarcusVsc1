@@ -416,6 +416,7 @@
                 this.imagem = "bigboss2";
                 this.vm = 75;
                 this.baseCD = 1.6;
+                this.scene.dialogo = "\"UAAAAAAHHHHHHH!!!!!_ Vou te derrotar!!!\""
             }
         }
 
@@ -423,7 +424,7 @@
             if (this.globalCD <= 0) {
                 this.globalCD = 3.5;
                 this.scene.assets.play("darkness");
-                cena1.adicionar(new Sprite({ x: this.x, y: this.y, w: 12, h: 12, vm: 40, imgX:1, imgY:1, 
+                cena1.adicionar(new Sprite({ x: this.x, y: this.y, w: 12, h: 12, vm: 29 + Math.random()*11, imgX:1, imgY:1, 
                 imagem: "monster", comportar: persegue(pc), props: { tipo: "npc" }}))
             }
         }

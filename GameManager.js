@@ -118,6 +118,7 @@ GameManager.prototype.criarEstagios = function(){
             gerenciador.estagios[2].sprites.push(gerenciador.criarTeleporte(6.2,0.2,6.5,8.9,5))
             gerenciador.estagios[2].sprites.push(gerenciador.criarTeleporte(5.2,0.2,5.5,8.9,5))
             var idx = cena1.estagio.eventos.indexOf(this);
+            cena1.dialogo = "";
             cena1.estagio.eventos.splice(idx);
         }
     }
@@ -156,6 +157,7 @@ GameManager.prototype.criarEstagios = function(){
             var idx = cena1.estagio.eventos.indexOf(this);
             if(gerenciador.globalVar[0] == 2){
                 cena1.assets.play("quest");
+                cena1.dialogo = "Uma nova passagem foi liberada.";
             }
             cena1.estagio.eventos.splice(idx);
         }
@@ -193,6 +195,7 @@ GameManager.prototype.criarEstagios = function(){
             var idx = cena1.estagio.eventos.indexOf(this);
             if(gerenciador.globalVar[0] == 2){
                 cena1.assets.play("quest");
+                cena1.dialogo = "Uma nova passagem foi liberada";
             }
             cena1.estagio.eventos.splice(idx);
         }
@@ -432,7 +435,6 @@ GameManager.prototype.criarEstagios = function(){
     event = function () {
         gerenciador.estagios[10].mapa.cells[9][1].tipo = 9;
         gerenciador.estagios[10].mapa.cells[9][2].tipo = 9;
-        cena1.assets.play("quest");
     }
 
     spriteLista.push(this.criarEventador(5,7,event));
@@ -450,6 +452,7 @@ GameManager.prototype.criarEstagios = function(){
         gerenciador.estagios[10].mapa.cells[6][1].tipo = 0;
         gerenciador.estagios[10].mapa.cells[5][0].tipo = 0;
         gerenciador.estagios[10].mapa.cells[6][0].tipo = 0;
+        cena1.assets.play("quest");
     }
 
     spriteLista.push(this.criarEventador(1,6,event));
@@ -477,7 +480,7 @@ GameManager.prototype.criarEstagios = function(){
         gerenciador.estagios[10].mapa.cells[6][6].tipo = 9;
         gerenciador.estagios[10].mapa.cells[6][7].tipo = 9;
 
-        cena1.spritesEV.forEach( function (sprite){
+        cena1.spritesEV.forEach(function (sprite){
             sprite.evented = 0;
         })
         
@@ -530,6 +533,12 @@ GameManager.prototype.criarEstagios = function(){
 
     spriteLista.push(this.criarDisparador(5,6,3)); 
     spriteLista.push(this.criarDisparador(6,6,3));
+
+    evento1 = function() {
+        cena1.dialogo = "";
+    }
+
+    eventoLista.push(evento1);
 
     event = function () {
         gerenciador.estagios[11].mapa.cells[0][1].tipo = 0;
@@ -660,8 +669,9 @@ GameManager.prototype.criarEstagios = function(){
         if (cena1.spritesE.length == 0){
             var idx = cena1.estagio.eventos.indexOf(this);
             cena1.assets.play("quest");
-            gerenciador.estagios[13].mapa.cells[1][11].tipo = 0;
+            gerenciador.estagios[13].mapa.cells[11][1].tipo = 0;
             cena1.estagio.eventos.splice(idx);
+            cena1.dialogo = "Uma nova passagem foi liberada."
         }
     }
 
@@ -783,11 +793,5 @@ GameManager.prototype.criarEventador = function (posX, posY, event) {
     return new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm:0, imgX:3, imgY:0, evented: 0,
                 imagem: "crystal", desenhar: desenhaTiro, evento: event, props: { tipo: "eventador" }});
 }
-
-
-
-
-
-
 
 
