@@ -633,7 +633,7 @@ GameManager.prototype.criarEstagios = function(){
     mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
         [
         [6,6,6,6,6,6,6,6,6,6,6,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,7,7,0,0,0,0,7,7,0,6],
         [6,2,6,6,0,6,6,0,6,6,2,6],
         [6,2,6,0,0,0,0,0,0,6,2,6],
         [6,0,0,1,3,6,6,1,3,0,0,6],
@@ -655,6 +655,17 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista.push(this.criarInimigo(8,10,1));
     spriteLista.push(this.criarInimigo(3,2,4));
     spriteLista.push(this.criarInimigo(0,9,4));
+
+    evento1 = function () {
+        if (cena1.spritesE.length == 0){
+            var idx = cena1.estagio.eventos.indexOf(this);
+            cena1.assets.play("quest");
+            gerenciador.estagios[13].mapa.cells[1][11].tipo = 0;
+            cena1.estagio.eventos.splice(idx);
+        }
+    }
+
+    eventoLista.push(evento1);
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
