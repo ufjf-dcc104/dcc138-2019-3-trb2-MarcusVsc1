@@ -275,6 +275,8 @@ Scene.prototype.checaColisao = function(){
             } else {
                 this.pc.mana = 5;
             }
+            var idx = this.estagio.sprites.indexOf(this.spritesPoder[i]);
+            this.estagio.sprites.splice(idx, 1);
             this.toRemove.push(this.spritesPoder[i]);
         }
 
@@ -291,6 +293,7 @@ Scene.prototype.checaColisao = function(){
             this.spritesD = [];
             this.spritesTE = [];
             this.spritesEV = [];
+            this.spritesXP = [];
             this.spritesPoder = [];
             this.spriteCounter = 0;
 
