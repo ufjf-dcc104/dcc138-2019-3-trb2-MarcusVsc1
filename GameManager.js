@@ -700,7 +700,7 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista = [];
     eventoLista = [];
 
-    spriteLista.push(this.criarTeleporte(0.2,1.2,11,1.5,13));
+    spriteLista.push(this.criarTeleporte(0.2,1.2,11,1,13));
     spriteLista.push(this.criarTeleporte(10.2,0.2,10.5,8.9,16));
     spriteLista.push(this.criarObjeto(0, 3, 4, 1));
     spriteLista.push(this.criarObjeto(0, 3, 5, 1));
@@ -717,6 +717,38 @@ GameManager.prototype.criarEstagios = function(){
     }
 
     spriteLista.push(this.criarEventador(3,1,event));
+
+    this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
+
+    //estagio 17
+
+    mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
+        [
+        [9,9,9,9,9,1,3,9,9,9,9,9],
+        [9,0,0,0,9,0,0,0,0,9,9,9],
+        [9,7,7,7,9,7,7,0,0,9,9,9],
+        [9,0,9,9,9,9,0,0,0,0,9,9],
+        [9,0,9,0,9,0,8,7,7,0,0,9],
+        [9,0,9,7,0,8,9,0,9,7,0,9],
+        [9,0,9,0,8,0,0,0,0,0,0,9],
+        [9,0,0,7,9,0,8,7,7,7,7,9],
+        [9,7,0,0,0,0,0,0,0,0,0,9],
+        [9,9,7,7,7,7,7,7,7,7,0,9],
+        ]
+        });
+    spriteLista = [];
+    eventoLista = [];
+
+   // spriteLista.push(this.criarTeleporte(5.2,0.2,1.5,8.9,8));
+   // spriteLista.push(this.criarTeleporte(6.2,0.2,1.5,8.9,8));
+    spriteLista.push(this.criarPoder(0,1,1));
+    spriteLista.push(this.criarPoder(1,2,1));
+    spriteLista.push(this.criarTeleporte(10,9.8,10.5,1,15));
+    spriteLista.push(this.criarObjeto(0, 3, 6, 1));
+    spriteLista.push(this.criarObjeto(0, 4, 5, 1));
+    spriteLista.push(this.criarObjeto(0, 5, 4, 1));
+    spriteLista.push(this.criarObjeto(0, 6, 3, 1));
+    spriteLista.push(this.criarDisparador(3,1,0)); 
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
