@@ -800,8 +800,43 @@ GameManager.prototype.criarEstagios = function(){
 
     spriteLista.push(this.criarTeleporte(5.2,9.8,5.5,1,16));
     spriteLista.push(this.criarTeleporte(6.2,9.8,6.5,1,16));
-    spriteLista.push(this.criarTeleporte(5.2,0.2,1.5,8.9,8));
-    spriteLista.push(this.criarTeleporte(6.2,0.2,1.5,8.9,8));
+    spriteLista.push(this.criarTeleporte(5.2,0.2,6,8.9,18));
+    spriteLista.push(this.criarTeleporte(6.2,0.2,6,8.9,18));
+
+    this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
+
+    //estagio 19
+
+    mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
+        [
+        [6,6,6,6,6,6,6,6,6,6,0,6],
+        [6,6,6,6,6,6,6,6,6,6,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,12,12,12,12,12,12,12,12,12,12,6],
+        [6,11,11,11,11,11,11,11,11,11,11,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,0,6,0,0,0,0,6,0,0,6],
+        [6,6,0,0,0,0,0,0,0,0,6,6],
+        [6,6,6,0,0,0,0,0,0,6,6,6],
+        [6,6,6,6,6,6,6,6,6,6,6,6],
+        ]
+        });
+    spriteLista = [];
+    eventoLista = [];
+
+    //spriteLista.push(this.criarTeleporte(5.2,9.8,1.5,1,6));
+
+    evento1 = function() {
+        gerenciador.tema.src = "assets/blackflare.ogg";
+        gerenciador.tema.loop = true;
+        gerenciador.tema.play();
+        cena1.dialogo = "\"Finalmente você chegou até aqui..._Muito bem, mas sua jornada termina agora!_"+
+        "Se quer seu pai de volta, derrote-me!\"";
+        var idx = cena1.estagio.eventos.indexOf(this);
+        cena1.estagio.eventos.splice(idx);
+    } 
+
+    eventoLista.push(evento1);
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
