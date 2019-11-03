@@ -342,6 +342,7 @@
             }
         }
 
+        //desenha o chefe 1. necessário pelo tamanho e pelo esquema da imagem do chefe, que são diferentes dos outros sprites
         function desenharChefe (ctx) {
 
             ctx.save();
@@ -378,6 +379,7 @@
             
         };
 
+        //comportamento do chefe 1
         function atirarRochas2 () {
             
             if(this.spCD <= 0 && this.globalCD <= 0){
@@ -398,13 +400,14 @@
             }
         }
 
+        //movimento do chefe 1
         function moverChefe(dt) {
             if(this.imune > 0) {
                 this.imune = this.imune - 1*dt;
             }
             
             this.mc = (this.x / this.scene.map.SIZE);
-            if(this.mc >= 10.5 || this.mc <= 1.5){
+            if(this.mc >= 10.4 || this.mc <= 1.6){
                 this.vx = this.vx * -1
             }
             this.x = this.x + this.vx*this.vm*dt;
@@ -420,6 +423,7 @@
             }
         }
 
+        //cria uma caveira, comportamento do necromante
         function necromancia () {
             if (this.globalCD <= 0) {
                 this.globalCD = 3.5;

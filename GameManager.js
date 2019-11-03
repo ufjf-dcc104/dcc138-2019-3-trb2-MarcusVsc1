@@ -33,9 +33,11 @@ mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
         ]
         });*/
 
+//contem os dados de cada estágio do jogo
 GameManager.prototype.criarEstagios = function(){
     var spriteLista = [];
     var eventoLista = [];
+
     //estagio 1
 
     var mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
@@ -679,9 +681,34 @@ GameManager.prototype.criarEstagios = function(){
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
+    //estagio 16
+
+    mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
+        [
+        [9,9,9,9,9,9,9,9,9,9,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,6,6,6,6,6,6,6,6,6,6,6],
+        ]
+        });
+    spriteLista = [];
+    eventoLista = [];
+
+    spriteLista.push(this.criarTeleporte(5.2,9.8,1.5,1,6));
+    spriteLista.push(this.criarTeleporte(6.2,9.8,1.5,1,6));
+
+    this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
+
 }
 
 //direcao => 0: baixo 1: esquerda, 2: direita, 3: cima
+//cria um inimigo passando como parâmetro seu tipo e sua posição X e Y
 GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
     var inimigo;
     switch (tipo){

@@ -29,6 +29,7 @@ function Scene(params) {
 Scene.prototype = new Scene();
 Scene.prototype.constructor = Scene;
 
+//adiciona os sprites ao scene
 Scene.prototype.adicionar = function(sprite){
     if(sprite.props.tipo == "pc"){
         this.pc = sprite;
@@ -68,6 +69,7 @@ Scene.prototype.adicionar = function(sprite){
     sprite.scene = this;
 };
 
+//desenha os sprites. os ifs são para colcoar o sprites em cima ou não do pc
 Scene.prototype.desenhar = function(){
     
     for(var i = 0; i<this.spritesE.length; i++){
@@ -116,6 +118,7 @@ Scene.prototype.desenhar = function(){
     } 
 };
 
+//move os sprites
 Scene.prototype.mover = function(dt){
     for(var i = 0; i<this.spritesE.length; i++){
         this.spritesE[i].mover(dt);
@@ -146,6 +149,7 @@ Scene.prototype.mover = function(dt){
     }
 };
 
+//adiciona o comportamento dos sprites
 Scene.prototype.comportar = function(){
     for(var i = 0; i<this.spritesE.length; i++){
         if(this.spritesE[i].comportar){
@@ -183,6 +187,7 @@ Scene.prototype.limpar = function(){
     this.ctx.clearRect(0,0, this.w, this.h);
 }
 
+//checa colisao entre sprites
 Scene.prototype.checaColisao = function(){
     for(var i = 0; i < this.spritesE.length; i++){
         //colisao inimigo com pc
@@ -195,7 +200,7 @@ Scene.prototype.checaColisao = function(){
             }    
         }
         for(var j = 0; j < this.spritesT.length; j++){
-
+            //remoção do tiro do pc quando sai da tela
             if(this.spritesT[j].y > this.h - this.spritesT[j].h - 8 || this.spritesT[j].y < 0
             || this.spritesT[j].x > this.w || this.spritesT[j].x < 0){
             this.toRemove.push(this.spritesT[j]);
@@ -224,6 +229,8 @@ Scene.prototype.checaColisao = function(){
             }
         }
     }
+    //remoção de tiro ao sair da tela. por questões de desempenho foi necessário (quando o tiro ia pra baixo, 
+    //o jogo ia pra 30 frames/seg)
     for(var i = 0; i < this.spritesTE.length; i++){
         if(this.spritesTE[i]!=null){
             if(this.spritesTE[i].y > this.h - 32 - this.spritesTE[i].h || this.spritesTE[i].y < 0 + 32
@@ -239,6 +246,7 @@ Scene.prototype.checaColisao = function(){
             }
 
         }
+        //colisao tiro com eventador
         for(var j = 0; j < this.spritesEV.length; j++) {
             if (this.spritesTE[i].colidiuCom(this.spritesEV[j]) && this.spritesTE[i].props.tipo == "tiroQ" 
                 && this.spritesEV[j].evented == 0){
@@ -251,6 +259,7 @@ Scene.prototype.checaColisao = function(){
                 
             
         }
+        //colisao tiro inimigo com pc
         if(this.spritesTE[i].colidiuCom(this.pc) && this.spritesTE[i].props.tipo == "tiroE"){
             if(this.spritesTE[i].props.modelo == "fireball") {
                     this.adicionar(new Animation({x: this.pc.x, y:this.pc.y, imagem: "explosion"}));
@@ -267,6 +276,7 @@ Scene.prototype.checaColisao = function(){
             }
         }
     }
+    //colisao pc com poder
     for (var i = 0; i < this.spritesPoder.length; i++){
         if(this.spritesPoder[i].colidiuCom(this.pc)){
             this.assets.play("heal");
@@ -281,6 +291,7 @@ Scene.prototype.checaColisao = function(){
         }
 
     }
+    //colisao com teleporte
     for (var i = 0; i < this.spritesTP.length; i++) {
         if(this.pc.colidiuCom(this.spritesTP[i])) {
             this.stageIndex = this.spritesTP[i].props.idx;
@@ -432,10 +443,6 @@ Scene.prototype.desenharHUD = function() {
     } else{
         ctx.fillText(this.dialogo,16,this.h+20);
     }
-    
-    
-
-
 }
 
 Scene.prototype.desenharCaixaDialogo = function (imgX,imgY) {
