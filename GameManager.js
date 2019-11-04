@@ -1117,5 +1117,3 @@ GameManager.prototype.criarEventador = function (posX, posY, event) {
     return new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm:0, imgX:3, imgY:0, evented: 0,
                 imagem: "crystal", desenhar: desenhaTiro, evento: event, props: { tipo: "eventador" }});
 }
-
-
