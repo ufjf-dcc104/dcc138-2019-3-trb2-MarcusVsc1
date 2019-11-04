@@ -851,14 +851,14 @@ GameManager.prototype.criarEstagios = function(){
     mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
         [
         [6,6,6,6,6,6,6,6,6,6,6,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
-        [6,0,0,0,0,0,0,0,0,0,0,6],
+        [6,6,6,0,0,0,0,0,0,6,6,6],
+        [6,6,0,0,6,0,0,6,0,0,6,6],
+        [6,0,0,6,5.1,5.4,5.4,5.7,6,0,0,6],
+        [6,0,0,0,5.2,5.5,5.5,5.8,0,0,0,6],
+        [6,0,0,0,5.2,5.5,5.5,5.8,0,0,0,6],
+        [6,0,0,6,5.3,5.6,5.6,5.9,6,0,0,6],
+        [6,6,0,0,6,1,3,6,0,0,6,6],
+        [6,6,6,0,0,1,3,0,0,6,6,6],
         [6,6,6,6,6,6,6,6,6,6,6,6],
         ]
         });
@@ -928,6 +928,11 @@ GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
         case 9:
             inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 60, imgX:1, imgY:1, vx: 1, vy:0, globalCD: 2, baseCD: 2,
                 direcao: 0, imagem: "bruxa", vidas: 6, mover: moverBruxa, comportar: bruxaria, props: { tipo: "bruxa" }});
+            break;
+        //bruxa fase 2
+        case 10:
+            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:0, vx:0, vy:0,
+                direcao: 0, imagem: "monster", comportar: atirarRochas, props: { tipo: "npc" }});
             break;
     }
     return inimigo;
