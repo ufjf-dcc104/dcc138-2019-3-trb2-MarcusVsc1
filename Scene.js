@@ -699,7 +699,5 @@ Scene.prototype.passo = function(dt){
             this.assets.img("bluemoon"),
             0,0,384,320
             );
-
     }
-
 }
