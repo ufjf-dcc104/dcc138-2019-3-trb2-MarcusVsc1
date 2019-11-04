@@ -869,6 +869,70 @@ GameManager.prototype.criarEstagios = function(){
     spriteLista.push(this.criarTeleporte(6.2,0.2,6,8.9,20));
     spriteLista.push(this.criarInimigo(10,5.5,4.5));
 
+    evento2 = function() {
+        if(cena1.spritesE.length == 0) {
+            cena1.dialogo = "";
+            gerenciador.tema.src = "assets/final.ogg";
+            gerenciador.tema.loop = true;
+            gerenciador.tema.play();
+            gerenciador.estagios[19].mapa.cells[5][0].tipo = 0;
+            gerenciador.estagios[19].mapa.cells[6][0].tipo = 0;
+            var idx = cena1.estagio.eventos.indexOf(this);
+            cena1.estagio.eventos.splice(idx);
+        }
+        
+        
+    } 
+    evento1 = function() {
+        cena1.dialogo = "\"Sua maldita... Como ousa me ferir!!\"";
+        var idx = cena1.estagio.eventos.indexOf(this);
+        cena1.estagio.eventos.splice(idx);
+    } 
+
+
+
+    eventoLista.push(evento2);
+    eventoLista.push(evento1);
+
+    this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
+
+    mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
+        [
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,6,6,6,6,6,6,9,9,9],
+        [9,9,9,6,4,4,4,4,6,9,9,9],
+        [9,9,9,6,4,4,4,4,6,9,9,9],
+        [9,9,9,4,4,4,4,4,4,9,9,9],
+        [9,9,9,7,7,1,3,8,7,9,9,9],
+        [9,9,9,9,9,1,3,9,9,9,9,9],
+        [9,9,9,9,9,1,3,9,9,9,9,9],
+        [6,6,6,6,6,4,4,6,6,6,6,6],
+        ]
+        });
+    spriteLista = [];
+    eventoLista = [];
+
+    spriteLista.push(this.criarObjeto(2, 5.5, 4.5, 1));
+    spriteLista.push(this.criarObjeto(1, 5.5, 3.5, 1));
+
+    evento2 = function(){
+        pc.comportar = persegue(cena1.spritesO[0]);
+        pc.vm = 30;
+        var idx = cena1.estagio.eventos.indexOf(this);
+        cena1.estagio.eventos.splice(idx);
+    }
+
+    evento1 = function() {
+        if(pc.colidiuCom(cena1.spritesO[0])){
+            cena1.dialogo = "\"Lyra, minha filha... como você cresceu..._ Se tornou tão forte... muito obrigado por me salvar!\""
+            cena1.theEnd = 59;
+            var idx = cena1.estagio.eventos.indexOf(this);
+            cena1.estagio.eventos.splice(idx);
+        }
+    }
+    eventoLista.push(evento1);
+    eventoLista.push(evento2);
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
@@ -932,7 +996,7 @@ GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
             break;
         //bruxa fase 2
         case 10:
-            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:1, imgY:1, vx:0, vy:0, vidas: 35,
+            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:1, imgY:1, vx:0, vy:0, vidas: 1,
                 direcao: 0, imagem: "bruxa", globalCD: 2, fireCount: 0, mod: 0, comportar: bruxaria2, baseCD: 2, props: { tipo: "npc", boss: 1 }});
             break;
     }
@@ -959,14 +1023,26 @@ GameManager.prototype.fabricaDeEstagios = function (map, spriteLista, eventoList
     return estagio;
 }
 
-//cria objetos. ate o momento somente dispara bolas de fogo
+//cria objetos
 GameManager.prototype.criarObjeto = function (numero, posX, posY, direct) {
     var objeto;
     switch (numero) {
+        //gargula
         case 0:
             objeto = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm:0, direcao: direct, imgX:0, imgY:0, 
                 imagem: "gargoyle", mover: moverObjeto, comportar: atirarFireball, props: { tipo: "objeto" }});
             break;
+        //pai da lyra
+        case 1:
+            objeto = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm:0, direcao: 0, imgX:0, imgY:0, 
+                imagem: "dad", mover: moverObjeto, props: { tipo: "objeto" }});
+            break;
+        //espaco vazio
+        case 2:
+            objeto = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm:0, direcao: 0, imgX:0, imgY:1, 
+                imagem: "dad", mover: moverObjeto, props: { tipo: "objeto" }});
+            break;
+
     }
     return objeto;
 }

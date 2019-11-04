@@ -22,7 +22,8 @@ function Scene(params) {
         gamer: null,
         spriteCounter: 0,
         dialogo: "",
-        bruxa: null
+        bruxa: null,
+        theEnd:0
     }
     Object.assign(this, exemplo, params);
 }
@@ -319,8 +320,8 @@ Scene.prototype.checaColisao = function(){
     for (var i = 0; i < this.spritesTP.length; i++) {
         if(this.bruxa!=null && this.bruxa.colidiuCom(this.spritesTP[i])){
             this.bruxa = null;
-            this.gamer.estagios[this.stageIndex].mapa.cells[3][4].tipo = 0
-            this.gamer.estagios[this.stageIndex].mapa.cells[3][3].tipo = 0
+            this.gamer.estagios[this.stageIndex].mapa.cells[3][4].tipo = 2;
+            this.gamer.estagios[this.stageIndex].mapa.cells[3][3].tipo = 2;
             this.assets.play("door");
             this.dialogo = "Agora é a hora da verdade!_A batalha final contra a bruxa finalmente começará!"
         }
@@ -655,13 +656,33 @@ Scene.prototype.desenharCaixaDialogo2 = function (imgX,imgY) {
 }
 
 Scene.prototype.passo = function(dt){
-    this.gameDefiner();
-    this.limpar();
-    this.desenharMapa();
-    this.comportar();
-    this.mover(dt);
-    this.desenhar();
-    this.checaColisao();
-    this.removeSprites();
-    this.desenharHUD();
+    if(this.theEnd <= 0) {
+        this.gameDefiner();
+        this.limpar();
+        this.desenharMapa();
+        this.comportar();
+        this.mover(dt);
+        this.desenhar();
+        this.checaColisao();
+        this.removeSprites();
+        this.desenharHUD();
+    }
+    if(this.theEnd >= 10 && this.theEnd < 60){
+      this.theEnd-= 8*dt;
+      if(this.theEnd <= 20) {        
+        this.theEnd = 60;
+    }
+    }
+    if(this.theEnd == 60) {
+        this.desenharHUD();
+        this.limpar();
+        this.dialogo = "Obrigado por jogar! Jogo criado por: _Marcus Vinicius V. A. Cunha - Mat. SIGA 201776013_"+
+        "Jogo baseado no álbum \"Story of Lyra \" de Cashew.";
+        ctx.drawImage(
+            this.assets.img("bluemoon"),
+            0,0,384,320
+            );
+
+    }
+
 }
