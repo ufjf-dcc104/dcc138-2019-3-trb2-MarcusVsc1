@@ -597,6 +597,8 @@ GameManager.prototype.criarEstagios = function(){
 
     event = function () {
         gerenciador.estagios[13].mapa.cells[6][2].tipo = 0;
+        cena1.assets.play("quest");
+        cena1.dialogo = "Uma nova passagem foi liberada."
     }
 
     spriteLista.push(this.criarEventador(8,5,event));
@@ -634,6 +636,8 @@ GameManager.prototype.criarEstagios = function(){
     event = function () {
         gerenciador.estagios[11].mapa.cells[5][0].tipo = 0;
         gerenciador.estagios[11].mapa.cells[6][0].tipo = 0;
+        cena1.assets.play("quest");
+        cena1.dialogo = "Uma nova passagem foi liberada."
     }
 
     spriteLista.push(this.criarEventador(9,8,event));
