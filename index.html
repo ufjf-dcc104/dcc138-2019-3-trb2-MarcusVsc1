@@ -197,7 +197,7 @@
  		    this.y = this.y + this.vy*dt;
         }
 
-        function desenhaTiro(){
+        function desenhaDisp(){
         	ctx.save();
 	    	ctx.translate(this.x, this.y);  
 		    var F = Math.floor(this.frame);
@@ -207,13 +207,32 @@
 	        192*this.imgY + this.direcao*48 + 1,
 	        48,
 	        48,
-	        -this.w-4,
-	        -this.h/2-15,
+	        -this.w+5,
+	        -this.h,
 	        30,
 	        30,
 		    );
 
 		    ctx.restore();
+        }
+
+        function desenhaTiro(){
+            ctx.save();
+            ctx.translate(this.x, this.y);  
+            var F = Math.floor(this.frame);
+            ctx.drawImage(
+            this.scene.assets.img(this.imagem),
+            144*this.imgX + (F%3)*48,
+            192*this.imgY + this.direcao*48 + 1,
+            48,
+            48,
+            -this.w-4,
+            -this.h/2-15,
+            30,
+            30,
+            );
+
+            ctx.restore();
         }
 
         //direcao => 0: baixo 1: esquerda, 2: direita, 3: cima

@@ -43,7 +43,6 @@ Sprite.prototype.desenhar = function (ctx) {
 
     ctx.save();
 
-
     ctx.translate(this.x, this.y);
     if(this.imune > 0 && this.atingido <= 0){
       ctx.globalAlpha = 0.5*Math.cos(60*this.imune);

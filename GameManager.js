@@ -1108,8 +1108,8 @@ GameManager.prototype.criarPoder = function (numero, posX, posY) {
 
 //cria disparador de bolas de fogo quando entram em contato com a espada
 GameManager.prototype.criarDisparador = function (posX, posY, direct) {
-    return new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm:0, direcao: direct, imgX:2, imgY:1, 
-                swCD: 0.6, imagem: "object", props: { tipo: "disparador" }});
+    return new Sprite({ x: posX*32+16, y: posY*32+16, w: 20, h: 20, vm:0, direcao: direct, imgX:2, imgY:1, 
+                swCD: 0.6, imagem: "object", desenhar: desenhaDisp, props: { tipo: "disparador" }});
 }
 
 //cria um eventador. dispara um evento quando uma bola de fogo do disparador entra em contato
