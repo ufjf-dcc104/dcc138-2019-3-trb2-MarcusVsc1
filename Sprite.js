@@ -32,6 +32,7 @@ function Sprite(params = {}) {
         charStop: 0,
         atingido: 0,
         atravessa: 0,
+        ortogonal: 0
     }
     Object.assign(this, exemplo, params);
 }
@@ -41,10 +42,6 @@ Sprite.prototype.constructor = Sprite;
 Sprite.prototype.desenhar = function (ctx) {
 
     ctx.save();
-    ctx.fillStyle = "midnightblue";
-    ctx.fillRect(this.x-this.w/2,this.y,this.w,this.h/2);
-    ctx.strokeStyle = "black";
-    ctx.strokeRect(this.x-this.w/2,this.y,this.w,this.h/2);
 
 
     ctx.translate(this.x, this.y);
@@ -90,7 +87,9 @@ Sprite.prototype.mover = function (dt) {
            this.imune = this.imune - 1*dt;
         }
     if (this.charStop <= 0 && this.atingido <= 0){
-        this.moverOrtogonal(dt);
+        if(this.ortogonal == 0){this.moverOrtogonal(dt);}
+        else this.moverCircular(dt);
+        
         
     } else {
         if(this.imune <= 0){this.frame += 8*dt;}

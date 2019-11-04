@@ -75,9 +75,8 @@ Scene.prototype.adicionar = function(sprite){
 
 //desenha os sprites. os ifs são para colcoar o sprites em cima ou não do pc
 Scene.prototype.desenhar = function(){
-    
     for(var i = 0; i<this.spritesE.length; i++){
-        this.spritesE[i].desenhar(this.ctx);
+        if(this.spritesE[i].y <= this.pc.y)this.spritesE[i].desenhar(this.ctx);
     }  
     for(var i = 0; i<this.spritesD.length; i++){
         if(this.spritesD[i].y <= this.pc.y)this.spritesD[i].desenhar(this.ctx);
@@ -122,6 +121,10 @@ Scene.prototype.desenhar = function(){
     for(var i = 0; i<this.spritesEV.length; i++){
         if(this.spritesEV[i].y > this.pc.y)this.spritesEV[i].desenhar(this.ctx);
     } 
+
+    for(var i = 0; i<this.spritesE.length; i++){
+        if(this.spritesE[i].y > this.pc.y)this.spritesE[i].desenhar(this.ctx);
+    }  
 };
 
 //move os sprites

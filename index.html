@@ -196,10 +196,6 @@
 
         function desenhaTiro(){
         	ctx.save();
-        	ctx.fillStyle = "midnightblue";
-            ctx.fillRect(this.x,this.y,this.w,this.h/2);
-            ctx.strokeStyle = "black";
-            ctx.strokeRect(this.x,this.y,this.w,this.h/2);
 	    	ctx.translate(this.x, this.y);  
 		    var F = Math.floor(this.frame);
 		    ctx.drawImage(
@@ -466,6 +462,77 @@
                 cena1.adicionar(new Sprite({ x: this.x, y: this.y, w: 12, h: 12, vm: 29 + Math.random()*11, imgX:2, imgY:1, 
                 imagem: "monster", atravessa: 1, comportar: persegue(pc), props: { tipo: "npc" }}))
                 this.globalCD = 1.5 + Math.random() * 2;
+            }
+        }
+
+        //comportamento da fase 2 da bruxa
+        //direcao => 0: baixo 1: esquerda, 2: direita, 3: cima
+        function bruxaria2() {
+            if(this.x < pc.x && this.y > pc.y) {this.direcao = 2;}
+            if(this.x > pc.x && this.y > pc.y) {this.direcao = 3;}
+            if(this.x > pc.x && this.y < pc.y) {this.direcao = 1;}
+            if(this.x < pc.x && this.y < pc.y) {this.direcao = 0;}
+
+            if(this.spCD <= 0 && this.globalCD <= 0){
+                if(this.mod%2 == 0){
+                    var aX =  pc.x - this.x;
+                    var aY =  pc.y - this.y;
+                    var angulo = Math.atan2(aY, aX)
+
+                    var tiro = new Sprite({
+                            x: this.x, y: this.y,
+                            imagem: "flame", direcao: 0,
+                            vm: 35, w: 12, h: 12, imgX: 1, imgY: 1, vx: 1, vy: 1, imune: 0, mover: moverCircular, a: angulo,
+                            props: { tipo: "tiroE", modelo: "fireball" }, desenhar: desenhaTiro, atravessa: 1
+                        });
+                    this.scene.adicionar(tiro);
+                    assetsMng.play("shot");
+                } else {
+                    this.scene.assets.play("darkness");
+                    cena1.adicionar(new Sprite({ x: this.x, y: this.y, w: 12, h: 12, vm: 29 + Math.random()*11, imgX:2, imgY:1, 
+                    imagem: "monster", atravessa: 1, comportar: persegue(pc), props: { tipo: "npc" }}))
+                    this.globalCD = 0.5 + Math.random() * 2;
+                }
+                this.spCD = 0.3;
+                this.fireCount++;
+                if(this.fireCount == 6){
+                        this.globalCD = this.baseCD;
+                        this.fireCount = 0;
+                        this.mod++;
+                    }
+            }
+        }
+
+        function moverCircular() {
+            this.a = this.a + this.va * dt;
+            this.frame += 8*dt;
+            this.vx = this.vm * Math.cos(this.a);
+            this.vy = this.vm * Math.sin(this.a);
+            this.vm = this.vm+1.2;
+            this.x = this.x + this.vx * dt;
+            this.y = this.y + this.vy * dt;
+
+            this.spCD = this.spCD - dt;
+            this.swCD = this.swCD - dt;
+            this.globalCD = this.globalCD - dt;
+            
+        }
+
+        function persegue2(alvo) {
+            return function () {
+                this.vx = this.vm * Math.sign(alvo.x - this.x) - Math.sqrt(this.vm)*2; 
+                this.vy = this.vm * Math.sign(alvo.y - this.y) - Math.sqrt(this.vm)*2;
+                this.vm = this.vm + 0.5;
+
+                if(Math.floor(this.frame) > 20){
+                    this.scene.adicionar(new Animation({x: this.x, y:this.y, imagem: "explosion"}));
+                    this.scene.assets.play("explosion");
+                    this.scene.toRemove.push(this);
+                }
+                
+                if(this.y < alvo.y + alvo.h/2) {this.direcao = 0}
+                else{if(this.y > alvo.y - alvo.h/2){this.direcao = 3}
+                }     
             }
         }
 

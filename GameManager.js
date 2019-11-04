@@ -867,6 +867,7 @@ GameManager.prototype.criarEstagios = function(){
 
     spriteLista.push(this.criarTeleporte(5.2,0.2,6,8.9,20));
     spriteLista.push(this.criarTeleporte(6.2,0.2,6,8.9,20));
+    spriteLista.push(this.criarInimigo(10,5.5,4.5));
 
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
@@ -927,12 +928,12 @@ GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
         // bruxa fase 1
         case 9:
             inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 60, imgX:1, imgY:1, vx: 1, vy:0, globalCD: 2, baseCD: 2,
-                direcao: 0, imagem: "bruxa", vidas: 6, mover: moverBruxa, comportar: bruxaria, props: { tipo: "bruxa" }});
+                direcao: 0, imagem: "bruxa", vidas: 28, mover: moverBruxa, comportar: bruxaria, props: { tipo: "bruxa" }});
             break;
         //bruxa fase 2
         case 10:
-            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:3, imgY:0, vx:0, vy:0,
-                direcao: 0, imagem: "monster", comportar: atirarRochas, props: { tipo: "npc" }});
+            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:1, imgY:1, vx:0, vy:0, vidas: 35,
+                direcao: 0, imagem: "bruxa", globalCD: 2, fireCount: 0, mod: 0, comportar: bruxaria2, baseCD: 2, props: { tipo: "npc", boss: 1 }});
             break;
     }
     return inimigo;
