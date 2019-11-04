@@ -896,6 +896,8 @@ GameManager.prototype.criarEstagios = function(){
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
+    //estagio 21 - cutscene de fim de jogo
+
     mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
         [
         [9,9,9,9,9,9,9,9,9,9,9,9],
@@ -936,6 +938,42 @@ GameManager.prototype.criarEstagios = function(){
 
     this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 
+    //estagio 22 - tela de game over
+
+    mapa = new Map({COLUMNS:12, LINES:10, assets: assetsMng, m:
+        [
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9],
+        ]
+        });
+    spriteLista = [];
+    eventoLista = [];
+
+    spriteLista.push(this.criarObjeto(3, 5.5, 4.5, 1));
+
+    evento1 = function(){
+        pc.comportar = function (){};
+        pc.desenhar = function (){};
+        cena1.dialogo = "Você perdeu! A pequena Lyra não consegue salvar seu pai..._Aperte F5 para reiniciar o jogo."
+        gerenciador.tema.src = "assets/gameover.ogg";
+        gerenciador.tema.loop = false;
+        gerenciador.tema.play();
+
+        var idx = cena1.estagio.eventos.indexOf(this);
+        cena1.estagio.eventos.splice(idx);
+
+    }
+
+    eventoLista.push(evento1);
+    this.estagios.push(this.fabricaDeEstagios(mapa,spriteLista,eventoLista));
 }
 
 //direcao => 0: baixo 1: esquerda, 2: direita, 3: cima
@@ -996,7 +1034,7 @@ GameManager.prototype.criarInimigo = function(tipo, posX, posY) {
             break;
         //bruxa fase 2
         case 10:
-            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:1, imgY:1, vx:0, vy:0, vidas: 1,
+            inimigo = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm: 0, imgX:1, imgY:1, vx:0, vy:0, vidas: 20,
                 direcao: 0, imagem: "bruxa", globalCD: 2, fireCount: 0, mod: 0, comportar: bruxaria2, baseCD: 2, props: { tipo: "npc", boss: 1 }});
             break;
     }
@@ -1042,7 +1080,11 @@ GameManager.prototype.criarObjeto = function (numero, posX, posY, direct) {
             objeto = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm:0, direcao: 0, imgX:0, imgY:1, 
                 imagem: "dad", mover: moverObjeto, props: { tipo: "objeto" }});
             break;
-
+        //lyra caida
+        case 3:
+            objeto = new Sprite({ x: posX*32+16, y: posY*32+16, w: 12, h: 12, vm:0, direcao: 1, imgX:2, imgY:1, 
+                imagem: "expressoes", mover: moverObjeto, props: { tipo: "objeto" }});
+            break;
     }
     return objeto;
 }

@@ -353,6 +353,23 @@ Scene.prototype.checaColisao = function(){
             }
         }
     }
+    if(this.pc.vidas == 0 && this.pc.atingido >0 ){
+        this.gamer.tema.pause();
+    }
+    if(this.pc.vidas == 0 && this.pc.atingido <=0 ){
+        this.pc.mana = 0;
+        this.spritesTP = [];
+        this.spritesE = [];
+        this.spritesT = [];
+        this.spritesO = [];
+        this.spritesD = [];
+        this.spritesTE = [];
+        this.spritesEV = [];
+        this.spritesXP = [];
+        this.spritesPoder = [];
+        this.spriteCounter = 0;
+        this.stageIndex = 21;
+    }
 };
 
 Scene.prototype.removeSprites = function () {
