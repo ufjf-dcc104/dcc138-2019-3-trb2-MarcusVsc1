@@ -491,7 +491,7 @@
                     this.scene.assets.play("darkness");
                     cena1.adicionar(new Sprite({ x: this.x, y: this.y, w: 12, h: 12, vm: 29 + Math.random()*11, imgX:2, imgY:1, 
                     imagem: "monster", atravessa: 1, comportar: persegue(pc), props: { tipo: "npc" }}))
-                    this.globalCD = 0.5 + Math.random() * 2;
+                    this.globalCD = 0.5 + Math.random() * 1.2;
                 }
                 this.spCD = 0.3;
                 this.fireCount++;
