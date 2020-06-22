@@ -70,7 +70,7 @@ Sprite.prototype.desenhar = function (ctx) {
         192*picY + d*48 + 1,
         48,
         48,
-        -this.w-2,
+        -this.w-3.1,
         -this.h-12,
         30,
         30,
